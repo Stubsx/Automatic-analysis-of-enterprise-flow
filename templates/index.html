@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script type="text/javascript" ></script>
+<script type="text/javascript"></script>
+<link rel="stylesheet" type="text/css">
+
+
+<meta charset="utf-8" />
+<title>流水自动分析</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script type="text/javascript">
+    function display(id){  
+        var traget=document.getElementById(id);  
+        if(traget.style.display=="none"){  
+            traget.style.display="";  
+        }else{  
+            traget.style.display="none";  
+      }  
+   }  
+</script>
+
+<style type="text/css">
+
+    
+    .main{
+        background-color: #fff;
+        border-radius: 10px;
+        width: 85%%;
+        height: 500px;
+        margin:40px
+    }
+    .head{
+        padding-top:50px;
+        padding-left:50px;
+    }
+    .description{
+        padding-left:50px;
+        padding-right:50px;
+    }
+    .button {
+        background-color: #36AE7C; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        margin-left : 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        border-radius:10px;
+        vertical-align: top;
+    }
+    
+    .button2:hover {
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+    }
+    
+    .a-upload {
+        padding: 15px 32px;
+        position: relative;
+        cursor: pointer;
+        color: white;
+        background: #187498;
+        border-radius: 10px;
+        overflow: hidden;
+        display: inline-block;
+        *display: inline;
+        *zoom: 1
+        vertical-align: top;
+    }
+
+    .a-upload  input {
+        position: absolute;
+        font-size: 100px;
+        right: 0;
+        top: 0;
+        opacity: 0;
+        filter: alpha(opacity=0);
+        cursor: pointer
+    }
+
+    .a-upload:hover {
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+    }
+
+    .centertext{
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    .loader {
+        width: 350px;
+        height: 350px;
+        border-radius: 50%;
+        background: linear-gradient(#f07e6e, #84cdfa, #5ad1cd);
+        animation: animate 1.2s linear infinite;
+        margin: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    @keyframes animate {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .loader span {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: linear-gradient(#f07e6e, #84cdfa, #5ad1cd);
+    }
+
+    .loader span:nth-child(1) {
+        filter: blur(5px);
+    }
+
+    .loader span:nth-child(2) {
+        filter: blur(10px);
+    }
+
+    .loader span:nth-child(3) {
+        filter: blur(25px);
+    }
+
+    .loader span:nth-child(4) {
+        filter: blur(50px);
+    }
+
+    .loader:after {
+        content: '';
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+        background: #f1f1f1;
+        border: solid white 10px;
+        border-radius: 50%;
+    }
+
+    .testswitch {
+        position: relative; 
+        width: 90px;
+        margin-right: 20px;
+        -webkit-user-select:none; 
+        -moz-user-select:none; 
+        -ms-user-select: none;
+    }
+    
+    .testswitch-checkbox {
+        display: none;
+    }
+    
+    .testswitch-label {
+        display: block; 
+        overflow: hidden; 
+        cursor: pointer;
+        border: 2px solid #999999; 
+        border-radius: 10px;
+    }
+    
+    .testswitch-inner {
+        display: block; 
+        width: 200%; 
+        margin-left: -100%;
+        transition: margin 0.3s ease-in 0s;
+    }
+    
+    .testswitch-inner::before, .testswitch-inner::after {
+        display: block; 
+        float: right; 
+        width: 50%; 
+        height: 30px; 
+        padding: 0; 
+        line-height: 30px;
+        font-size: 14px; 
+        color: white; 
+        font-family: 
+        Trebuchet, Arial, sans-serif; 
+        font-weight: bold;
+        box-sizing: border-box;
+    }
+    
+    .testswitch-inner::after {
+        content: attr(data-on);
+        padding-left: 10px;
+        background-color: #36AE7C; 
+        color: #FFFFFF;
+    }
+    
+    .testswitch-inner::before {
+        content: attr(data-off);
+        padding-right: 10px;
+        background-color: #EEEEEE; 
+        color: #999999;
+        text-align: right;
+    }
+    
+    .testswitch-switch {
+        position: absolute; 
+        display: block; 
+        width: 22px;
+        height: 22px;
+        margin: 4px;
+        background: #FFFFFF;
+        top: 0; 
+        bottom: 0;
+        right: 56px;
+        border: 2px solid #999999; 
+        border-radius: 20px;
+        transition: all 0.3s ease-in 0s;
+    }
+    
+    .testswitch-checkbox:checked + .testswitch-label .testswitch-inner {
+        margin-left: 0;
+    }
+    
+    .testswitch-checkbox:checked + .testswitch-label .testswitch-switch {
+        right: 0px; 
+    }
+
+    .tooltip {
+        position: relative;
+        display: inline-block;
+    }
+
+    .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 500px;
+        background-color: #EEEEEE;
+        color: #000;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        position: absolute;
+        z-index: 1;
+        top: -5px;
+        left: 110%;
+    }
+
+    .tooltip .tooltiptext::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: 100%;
+        margin-top: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent #EEEEEE transparent transparent;
+    }
+    .tooltip:hover .tooltiptext {
+        visibility: visible;
+    }
+</style>
+
+</head>
+<body style="background-color:#ED6663;">
+
+<div class = 'main'>
+    <h2 class = 'head'>上传企业银行流水</h2>
+    <p class='description'>可同时上传统一企业不同银行流水，本项目可自动进行合并。</p>
+    <p class='description'>点击上传后请等待1-3分钟后自动跳转至分析结果界面。</p>
+    <p class='description'>P.S. 暂时只支持.csv, .xls, .xlsx格式 （尽量使用网银原始导出文件，不要有合并单元格）</p>
+    <hr/>
+
+    <form action="upload" method="post" enctype="multipart/form-data" class='description'>
+        <div class="tooltip">表格处理⚠︎
+            <span class="tooltiptext">是否自动按月标记并统计销售回笼金额？（需额外处理1-2分钟）</span>
+        </div>
+        <div class="testswitch">
+            <input class="testswitch-checkbox" id="onoffswitch" type="checkbox" name="excelbool"> 
+            <label class="testswitch-label" for="onoffswitch">
+                <span class="testswitch-inner" data-on="ON" data-off="OFF"></span>
+                <span class="testswitch-switch"></span>
+            </label>
+        </div>
+        
+        <p> </p>
+        <a href="javascript:;" class="a-upload">
+            <input type="file" name="file[]" id="" multiple="" onchange="document.getElementById('filename').value=this.files[0].name">选择上传文件
+        </a>
+
+        <input type="submit" value="上传并处理" class='button button2' onclick="display('lb')">
+
+    </form>
+</div>
+
+
+<div id="lb" style="display:none">
+    <div class="loader">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
+</body>
+</html>

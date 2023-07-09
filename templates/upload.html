@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="utf-8" />
+<title>流水自动分析</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style type="text/css">
+    ol{
+        counter-reset: li; /* 创建一个计数器 */
+        list-style: none; /* 清除列表默认的编码*/
+        *list-style: decimal; /* 让IE6/7具有默认的编码 */
+        font: 15px 'trebuchet MS', 'lucida sans';
+        padding: 0;
+        margin-bottom: 4em;
+        text-shadow: 0 1px 0 rgba(255,255,255,.5);
+    }
+
+    ol ol{
+        margin: 0 0 0 2em; /* 给二级列表增加一定的左边距*/
+    }
+
+    .main{
+        background-color: #fff;
+        border-radius: 10px;
+        width: 85%%;
+        height: auto;
+        margin:40px
+    }
+    .head{
+        padding-top:50px;
+        padding-left:50px;
+    }
+    .description{
+        padding-left:50px;
+        padding-right:50px;
+        padding-bottom:20px;
+    }
+    .uploadbutton {
+        background-color: #4CAF50; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        border-radius:10px;
+    }
+
+    .rounded-list a {
+			position: relative;
+			display: block;
+			padding: 0.4em 0.4em 0.4em 2em;
+			*padding: 0.4em;/*for ie6/7*/
+			margin: 0.5em 0;
+			background: #ddd;
+			color: #444;
+			text-decoration: none;
+			/*CSS3属性*/
+			border-radius: 0.3em;/*制作圆角*/
+			/* transition动画效果*/
+			-moz-transition: all 0.3s ease-out;
+			-webkit-transition: all 0.3s ease-out;
+			-o-transition: all 0.3s ease-out;
+			-ms-transition: all 0.3s ease-out;
+			transition: all 0.3s ease-out;
+		}
+		.rounded-list a:hover {
+			background: #eee;
+		}
+		.rounded-list a:hover::before {
+			/*悬停时旋转编码*/
+			-moz-transform: rotate(360deg);
+			-webkit-transform: rotate(360deg);
+			-o-transform: rotate(360deg);
+			-ms-transform: rotate(360deg);
+			transform: rotate(360deg);
+		}
+		.rounded-list a::before {
+			
+			content: counter(li);
+			counter-increment: li;
+			color:white;
+			position: absolute;
+			left: -1.3em;
+			top: 50%;
+			margin-top: -1.3em;
+			background: #187498;
+			height: 2em;
+			width: 2em;
+			line-height: 2em;
+			border: 0.3em solid #fff;
+			text-align: center;
+			font-weight: bold;
+			border-radius: 2em;
+			-webkit-transition: all 0.3s ease-out;
+			-moz-transition: all 0.3s ease-out;
+			-ms-transition: all 0.3s ease-out;
+			-o-transition: all 0.3s ease-out;
+			transition: all 0.3s ease-out;
+		}
+
+</style>
+</head>
+
+<body style="background-color:#ED6663;">
+
+
+<div class="main">
+<h2 class="head">分析结果</h3>
+<div class='description'>
+<ol class="rounded-list">
+    <li><a href="flowvisual" target="_blank">打开流水可视化统计页面</a></li>
+	<script>
+		var excel_output = '{{excel_output}}'
+		if (excel_output=='True')
+		{document.write('<li><a href="{{url_for('output_file', filename='销售回笼统计.xlsx')}}">下载_销售回笼统计.xlsx</a></li>')}
+	</script>
+    
+</ol>
+</div>
+</div>
+
+
+<div class="main">
+<h2 class="head">已上传文件</h3>
+<p class='description'> 请确认刚才所上传的文件是否完整。</p>
+<div class="description">
+<ol class="rounded-list">
+{% for file in filenames %}
+    <li><a href="{{url_for('uploaded_file', filename=file)}}">{{file}}</a></li>
+{% endfor %}
+</ol>
+</div>
+
+</div>
+
+</body>
+</html>
